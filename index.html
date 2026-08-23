@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneaker Finder</title>
+    <link rel="stylesheet" href="style.css" >
+</head>
+
+
+<body>
+    <header>
+        <h1> Sneaker Finder</h1>
+        <p> A website powered by a Sneaker REST API </p>
+    </header>
+    <main>
+
+        <!-- SEARCH -->
+        <section class="search">
+            <input type="text" id="searchInput" placeholder="Search for a sneaker...">
+            <button onclick="searchSneakers()"> Search </button>
+            <button class="secondary" onclick="loadSneakers()"> Show All </button>
+
+        </section>
+
+        <section>
+            <h2>Sneakers</h2>
+            <div id="sneakerList" class="sneaker-list">
+                Loading sneakers...
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p> Data provided by the Sneaker API </p>
+    </footer>
+    <script src="app.js"></script>
+</body>
+</html>
