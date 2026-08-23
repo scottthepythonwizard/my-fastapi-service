@@ -30,7 +30,7 @@ function displaySneakers(sneakers) {
             <div class="sneaker-year">${sneaker.year}</div>
             <h3>${sneaker.brand} ${sneaker.model}</h3>
             <p class="sneaker-colorway">${sneaker.colorway}</p>
-            <p>$${sneaker.price}</p>
+            <p>${sneaker.price}</p>
             <p>${sneaker.description}</p>
             <button onclick="viewSneaker(${sneaker.id})"> View Details</button>
         `;
