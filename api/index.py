@@ -27,7 +27,7 @@ sneakers = [
             "price": "₱13,000",
             "description": "The sneaker that launched the Jordan line."
         },
-        
+
         {
             "id": 2,
             "brand": "Adidas",
@@ -71,7 +71,7 @@ sneakers = [
         {
             "id": 6,
             "brand": "Adidas",
-            "model": "Adidas Adizero EVO SL",
+            "model": "Adizero EVO SL",
             "year": 2024,
             "colorway": "White / Core Black",
             "price": "₱9,000",
@@ -81,7 +81,7 @@ sneakers = [
         {
             "id": 7,
             "brand": "Nike",
-            "model": "Nike Kobe 5",
+            "model": "Kobe 5",
             "year": 2009,
             "colorway": "Bruce Lee (Del Sol/Black)",
             "price": "₱9,895",
@@ -91,7 +91,7 @@ sneakers = [
         {
             "id": 8,
             "brand": "Adidas",
-            "model": "Adidas F50 Elite FG",
+            "model": "F50 Elite FG",
             "year": 2024,
             "colorway": "Advancement Pack (White/Solar Red/Lucid Blue)",
             "price": "₱14,500",
@@ -131,7 +131,7 @@ sneakers = [
         {
             "id": 12,
             "brand": "Adidas",
-            "model": "Adidas Harden Volume 8",
+            "model": "Harden Volume 8",
             "year": 2024,
             "colorway": "Pioneer (Core Black/Cloud White)",
             "price": "₱8,900",
@@ -141,7 +141,7 @@ sneakers = [
         {
             "id": 13,
             "brand": "New Balance",
-            "model": "New Balance Fresh Foam BB v2",
+            "model": "Fresh Foam BB v2",
             "year": 2024,
             "colorway": "Moon Daze / Sea Salt",
             "price": "₱8,250",
@@ -161,7 +161,7 @@ sneakers = [
         {
             "id": 15,
             "brand": "Nike",
-            "model": "Nike V2K Run",
+            "model": "V2K Run",
             "year": 2023,
             "colorway": "Summit White / Metallic Silver",
             "price": "₱6,895",
@@ -191,7 +191,7 @@ sneakers = [
         {
             "id": 18,
             "brand": "New Balance",
-            "model": "New Balance Tekela V4 Elite FG",
+            "model": "Tekela V4 Elite FG",
             "year": 2024,
             "colorway": "Metallic Gold / Black",
             "price": "₱12,500",

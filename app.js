@@ -1,14 +1,19 @@
 const API_URL = "https://my-fastapi-service.vercel.app";
 
+let allSneakers = [];       // full dataset, fetched once
+let activeBrand = "all";    // current filter tab
 
-// GET ALL sneakers
+
+// GET ALL SNEAKERS
 async function loadSneakers() {
     try {
         const response = await fetch(`${API_URL}/sneakers`);
         const data = await response.json();
-        displaySneakers(data.sneakers);
+        allSneakers = data.sneakers;
+        buildBrandTiles(allSneakers);
+        buildFilterTabs(allSneakers);
+        renderSneakers(allSneakers);
     }
-
     catch (error) {
         console.error(error);
         document.getElementById("sneakerList").innerHTML = "Unable to connect to the API.";
@@ -16,43 +21,94 @@ async function loadSneakers() {
 }
 
 
-// display sneakers
-function displaySneakers(sneakers) {
-    const sneakerList =
-        document.getElementById("sneakerList");
+// BUILD "TOP BRANDS" STRIP
+function buildBrandTiles(sneakers) {
+    const brandTiles = document.getElementById("brandTiles");
+    const brands = [...new Set(sneakers.map(s => s.brand))];
 
-    sneakerList.innerHTML = ""; 
+    brandTiles.innerHTML = "";
+    brands.forEach(brand => {
+        const tile = document.createElement("div");
+        tile.className = "brand-tile";
+        tile.textContent = brand;
+        tile.onclick = () => filterByBrand(brand);
+        brandTiles.appendChild(tile);
+    });
+}
+
+
+// BUILD FILTER TABS (ALL + one per brand)
+function buildFilterTabs(sneakers) {
+    const filterTabs = document.getElementById("filterTabs");
+    const brands = [...new Set(sneakers.map(s => s.brand))];
+
+    filterTabs.innerHTML = `<button class="filter-tab active" data-brand="all" onclick="filterByBrand('all')">All</button>`;
+    brands.forEach(brand => {
+        filterTabs.innerHTML += `<button class="filter-tab" data-brand="${brand}" onclick="filterByBrand('${brand}')">${brand}</button>`;
+    });
+}
+
+
+// FILTER BY BRAND (client-side, since we already have the full dataset)
+function filterByBrand(brand) {
+    activeBrand = brand;
+
+    document.querySelectorAll(".filter-tab").forEach(tab => {
+        tab.classList.toggle("active", tab.dataset.brand === brand);
+    });
+
+    const filtered = brand === "all"
+        ? allSneakers
+        : allSneakers.filter(s => s.brand === brand);
+
+    renderSneakers(filtered);
+}
+
+
+// RENDER SNEAKER CARDS
+function renderSneakers(sneakers) {
+    const sneakerList = document.getElementById("sneakerList");
+    const resultCount = document.getElementById("resultCount");
+
+    sneakerList.innerHTML = "";
+    resultCount.textContent = `${sneakers.length} result${sneakers.length === 1 ? "" : "s"}`;
 
     sneakers.forEach(sneaker => {
         const card = document.createElement("div");
         card.className = "sneaker-card";
+        card.onclick = () => viewSneaker(sneaker.id);
         card.innerHTML = `
-            <div class="sneaker-year">${sneaker.year}</div>
-            <h3>${sneaker.brand} ${sneaker.model}</h3>
-            <p class="sneaker-colorway">${sneaker.colorway}</p>
-            <p>${sneaker.price}</p>
-            <p>${sneaker.description}</p>
-            <button onclick="viewSneaker(${sneaker.id})"> View Details</button>
+            <div class="sneaker-image">${sneaker.brand} ${sneaker.model}</div>
+            <div class="sneaker-info">
+                <div class="sneaker-brand-row">
+                    <span class="sneaker-brand">${sneaker.brand}</span>
+                    <span class="sneaker-year">${sneaker.year}</span>
+                </div>
+                <div class="sneaker-model">${sneaker.model}</div>
+                <p class="sneaker-desc">${sneaker.description}</p>
+                <div class="sneaker-footer">
+                    <span class="sneaker-colorway">${sneaker.colorway}</span>
+                    <span class="sneaker-price">${sneaker.price}</span>
+                </div>
+            </div>
         `;
-
         sneakerList.appendChild(card);
     });
-
 }
 
-// GET ONE SHOE
-async function viewSneaker(id) {
 
+// GET ONE SNEAKER
+async function viewSneaker(id) {
     try {
         const response = await fetch(`${API_URL}/sneakers/${id}`);
         const sneaker = await response.json();
 
         alert(`
             ${sneaker.year} ${sneaker.brand} ${sneaker.model}
-            colorway:
+            Colorway:
             ${sneaker.colorway}
 
-            price:
+            Price:
             ${sneaker.price}
 
             Description:
@@ -63,28 +119,41 @@ async function viewSneaker(id) {
         console.error(error);
         alert("Unable to retrieve sneaker.");
     }
-
 }
 
-// SEARCH
-async function searchSneakers() {
 
+// SEARCH (uses the live API's search endpoint)
+async function searchSneakers() {
     const query = document.getElementById("searchInput").value;
     if (!query) {
-        loadSneakers();
+        clearSearch();
         return;
-    }  
-    try {
-        const response =
-            await fetch(`${API_URL}/sneakers/search?q=${encodeURIComponent(query)}`);
-        const data = await response.json();
-        displaySneakers(data.results);
     }
-
+    try {
+        const response = await fetch(`${API_URL}/sneakers/search?q=${encodeURIComponent(query)}`);
+        const data = await response.json();
+        activeBrand = "all";
+        document.querySelectorAll(".filter-tab").forEach(tab => {
+            tab.classList.toggle("active", tab.dataset.brand === "all");
+        });
+        renderSneakers(data.results);
+    }
     catch (error) {
         console.error(error);
         alert("Search failed.");
     }
 }
+
+
+// SHOW ALL / CLEAR SEARCH
+function clearSearch() {
+    document.getElementById("searchInput").value = "";
+    activeBrand = "all";
+    document.querySelectorAll(".filter-tab").forEach(tab => {
+        tab.classList.toggle("active", tab.dataset.brand === "all");
+    });
+    renderSneakers(allSneakers);
+}
+
 
 loadSneakers();

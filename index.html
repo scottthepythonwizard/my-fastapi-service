@@ -1,41 +1,82 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sneaker Finder</title>
-    <link rel="stylesheet" href="style.css" >
+    <title>SOLE. — Sneaker Finder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 
-
 <body>
-    <header>
-        <h1> Sneaker Finder</h1>
-        <p> A website powered by a Sneaker REST API </p>
+    <header class="site-header">
+        <div class="logo">SOLE<span class="accent">.</span></div>
+        <nav class="main-nav">
+            <a href="#collection">Discover</a>
+            <a href="#collection">Brands</a>
+            <a href="#collection">About</a>
+        </nav>
     </header>
-    <main>
 
-        <!-- SEARCH -->
-        <section class="search">
-            <input type="text" id="searchInput" placeholder="Search for a sneaker...">
-            <button onclick="searchSneakers()"> Search </button>
-            <button class="secondary" onclick="loadSneakers()"> Show All </button>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search sneakers, brands, colorways...">
+        <button onclick="searchSneakers()">Search</button>
+        <button class="secondary" onclick="clearSearch()">Show All</button>
+    </div>
 
-        </section>
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-tag">Sneaker Finder</span>
+            <h1>FIND YOUR<br><span class="accent">SOLE.</span></h1>
+            <p>Discover, explore, and browse sneakers across every brand &mdash; one kick at a time.</p>
+            <a href="#collection" class="cta-button">Start Exploring</a>
+        </div>
+    </section>
 
-        <section>
-            <h2>Sneakers</h2>
-            <div id="sneakerList" class="sneaker-list">
-                Loading sneakers...
-            </div>
-        </section>
-    </main>
+    <section class="brands-strip" aria-label="Explore by brand">
+        <p class="section-label">Explore by</p>
+        <h2>Top Brands</h2>
+        <div class="brand-tiles" id="brandTiles">
+            <!-- populated by app.js -->
+        </div>
+    </section>
 
-    <footer>
-        <p> Data provided by the Sneaker API </p>
+    <section class="collection" id="collection">
+        <p class="section-label">Browse all</p>
+        <div class="collection-heading">
+            <h2>Sneaker Collection</h2>
+            <span class="result-count" id="resultCount">20 results</span>
+        </div>
+
+        <div class="filter-tabs" id="filterTabs">
+            <button class="filter-tab active" data-brand="all">All</button>
+            <!-- more tabs populated by app.js -->
+        </div>
+
+        <div id="sneakerList" class="sneaker-grid">
+            Loading sneakers...
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-brand">
+            <div class="logo">SOLE<span class="accent">.</span></div>
+            <p>A sneaker discovery site built for a class project &mdash; browse, search, and explore.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Explore</h4>
+            <a href="#collection">Collection</a>
+            <a href="#">Brands</a>
+        </div>
+        <div class="footer-col">
+            <h4>Info</h4>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
     </footer>
+
     <script src="app.js"></script>
 </body>
 </html>
