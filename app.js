@@ -78,7 +78,7 @@ function renderSneakers(sneakers) {
         card.className = "sneaker-card";
         card.onclick = () => viewSneaker(sneaker.id);
         card.innerHTML = `
-            <div class="sneaker-image">${sneaker.brand} ${sneaker.model}</div>
+            <div class="sneaker-image"><img src="images/${sneaker.id}.jpg" alt="${sneaker.brand} ${sneaker.model}"></div>
             <div class="sneaker-info">
                 <div class="sneaker-brand-row">
                     <span class="sneaker-brand">${sneaker.brand}</span>
@@ -93,6 +93,24 @@ function renderSneakers(sneakers) {
             </div>
         `;
         sneakerList.appendChild(card);
+        const img = card.querySelector("img");
+        const logFit = () => {
+            const box = card.querySelector(".sneaker-image");
+            const cs = getComputedStyle(img);
+            const nw = img.naturalWidth;
+            const nh = img.naturalHeight;
+            const cw = img.clientWidth;
+            const ch = img.clientHeight;
+            const boxW = box.clientWidth;
+            const boxH = box.clientHeight;
+            const coverScale = Math.max(boxW / nw, boxH / nh);
+            const containScale = Math.min(boxW / nw, boxH / nh);
+            // #region agent log
+            fetch('http://127.0.0.1:7348/ingest/8de4df9d-4133-4776-bff2-6662d3aec6af',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'491361'},body:JSON.stringify({sessionId:'491361',runId:'pre-fix',hypothesisId:sneaker.id===10||sneaker.id===19?'A':'D',location:'app.js:renderSneakers',message:'img fit',data:{id:sneaker.id,model:sneaker.model,nw,nh,cw,ch,boxW,boxH,objectFit:cs.objectFit,coverScale,containScale,cropped:coverScale>containScale},timestamp:Date.now()})}).catch(()=>{});
+            // #endregion
+        };
+        if (img.complete && img.naturalWidth) logFit();
+        else img.addEventListener("load", logFit, { once: true });
     });
 }
 
