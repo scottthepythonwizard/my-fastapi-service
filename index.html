@@ -4,27 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse and search a curated collection of iconic sneakers.">
     <title>SOLE. — Sneaker Finder</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body data-api-url="https://my-fastapi-service.vercel.app">
     <header class="site-header">
         <div class="logo">SOLE<span class="accent">.</span></div>
         <nav class="main-nav">
             <a href="#collection">Discover</a>
-            <a href="#collection">Brands</a>
-            <a href="#collection">About</a>
+            <a href="#brands">Brands</a>
+            <a href="#about">About</a>
         </nav>
     </header>
 
-    <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search sneakers, brands, colorways...">
-        <button onclick="searchSneakers()">Search</button>
-        <button class="secondary" onclick="clearSearch()">Show All</button>
-    </div>
+    <form class="search-bar" id="searchForm" role="search">
+        <label class="sr-only" for="searchInput">Search sneakers</label>
+        <input type="search" id="searchInput" maxlength="100" autocomplete="off"
+            placeholder="Search brands, models, materials, countries...">
+        <button type="submit">Search</button>
+        <button type="button" class="secondary" id="showAllButton">Show All</button>
+    </form>
 
     <section class="hero">
         <div class="hero-content">
@@ -35,9 +39,9 @@
         </div>
     </section>
 
-    <section class="brands-strip" aria-label="Explore by brand">
+    <section class="brands-strip" id="brands" aria-labelledby="brandsTitle">
         <p class="section-label">Explore by</p>
-        <h2>Top Brands</h2>
+        <h2 id="brandsTitle">Top Brands</h2>
         <div class="brand-tiles" id="brandTiles">
             <!-- populated by app.js -->
         </div>
@@ -47,7 +51,7 @@
         <p class="section-label">Browse all</p>
         <div class="collection-heading">
             <h2>Sneaker Collection</h2>
-            <span class="result-count" id="resultCount">20 results</span>
+            <span class="result-count" id="resultCount" aria-live="polite">20 results</span>
         </div>
 
         <div class="filter-tabs" id="filterTabs">
@@ -55,12 +59,12 @@
             <!-- more tabs populated by app.js -->
         </div>
 
-        <div id="sneakerList" class="sneaker-grid">
-            Loading sneakers...
+        <div id="sneakerList" class="sneaker-grid" aria-live="polite" aria-busy="true">
+            <p class="collection-status">Loading sneakers…</p>
         </div>
     </section>
 
-    <footer class="site-footer">
+    <footer class="site-footer" id="about">
         <div class="footer-brand">
             <div class="logo">SOLE<span class="accent">.</span></div>
             <p>A sneaker discovery site built for a class project &mdash; browse, search, and explore.</p>
@@ -68,15 +72,15 @@
         <div class="footer-col">
             <h4>Explore</h4>
             <a href="#collection">Collection</a>
-            <a href="#">Brands</a>
+            <a href="#brands">Brands</a>
         </div>
         <div class="footer-col">
             <h4>Info</h4>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
+            <a href="#about">About</a>
+            <a href="https://my-fastapi-service.vercel.app/docs">API Docs</a>
         </div>
     </footer>
 
-    <script src="app.js"></script>
+    <script src="app.js" defer></script>
 </body>
 </html>
